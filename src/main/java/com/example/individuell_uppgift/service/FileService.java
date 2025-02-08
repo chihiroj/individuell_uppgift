@@ -12,8 +12,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 
+/**
+ *Handle business logic for file operations.
+ */
 @Service
 public class FileService {
+    /**
+     *Upload a new file.
+     * @param file The file to upload.
+     * @param folderName The folder to upload the file to.
+     * @return Success or error message
+     */
     public ResponseEntity<MessageResponseDTO> uploadFile(MultipartFile file, String folderName){
         String userHome = System.getProperty("user.home");
         String directory = getDirectory(folderName, userHome);
@@ -42,6 +51,12 @@ public class FileService {
         }
     }
 
+    /**
+     *Delete a file.
+     * @param folderName The folder to delete the file from.
+     * @param fileName The file to delete.
+     * @return Success or error message.
+     */
     public ResponseEntity<MessageResponseDTO>deleteFile(String folderName, String fileName){
         String userHome = System.getProperty("user.home");
         String directory = getDirectory(folderName, userHome);
@@ -66,14 +81,33 @@ public class FileService {
         return ResponseEntity.badRequest().body(new MessageResponseDTO("Could not delete the file."));
     }
 
+    /**
+     *Get the path to a file.
+     * @param folderName The last folder in the path.
+     * @param fileName The file in the path.
+     * @param userHome User directory on the current computer.
+     * @return location for the file.
+     */
     private static String getFileLocation(String folderName, String fileName, String userHome) {
         return userHome + File.separator + "Documents" + File.separator + folderName + File.separator + fileName;
     }
 
+    /**
+     *Get the path to a directory.
+     * @param folderName The last folder in the path.
+     * @param userHome User directory on the current computer.
+     * @return The path to the directory.
+     */
     private static String getDirectory(String folderName, String userHome) {
         return userHome + File.separator + "Documents" + File.separator + folderName;
     }
 
+    /**
+     *Download a selected file.
+     * @param folderName The folder to download the file from.
+     * @param fileName  The file to download.
+     * @return The file which is found.
+     */
     public ResponseEntity<?> downloadFile(String folderName, String fileName) {
         String userHome = System.getProperty("user.home");
         String directory = getDirectory(folderName, userHome);

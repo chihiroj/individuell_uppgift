@@ -11,12 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 
+/**
+ * This class is for managing folder operations.
+ */
 @RestController
 @RequiredArgsConstructor
 public class FolderController {
 
     private final FolderService folderService;
 
+    /**
+     * This endpoint is for creating a new folder.
+     * @param folderName The name of the folder to create.
+     * @return Status message.
+     */
     @PostMapping("/folder")
     public ResponseEntity<?> createFolder (@RequestParam String folderName){
 
